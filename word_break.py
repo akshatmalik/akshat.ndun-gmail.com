@@ -7,7 +7,7 @@ class Solution:
 
         if dp[a_index][b_index] == -1:
 
-            if len(A) == a_index and len(B) == b_index:
+            if len(B) == b_index:
                 return 1
 
             if a_index == len(A) and len(B) != b_index:
@@ -17,7 +17,8 @@ class Solution:
                 return 0
 
             if A[a_index] == B[b_index]:
-                dp[a_index][b_index] = self.find_make(A, a_index + 1, B, b_index + 1, dp) + self.find_make(A, a_index + 1, B, b_index, dp)
+                dp[a_index][b_index] = self.find_make(A, a_index + 1, B, b_index + 1, dp) + \
+                                       self.find_make(A, a_index + 1, B, b_index, dp)
             else:
                 dp[a_index][b_index] = self.find_make(A, a_index + 1, B, b_index, dp)
 
@@ -25,7 +26,8 @@ class Solution:
 
     def numDistinct(self, A, B):
         dp = [[-1 for _ in range(len(B) + 1)] for _ in range(len(A) + 1) ]
-        return self.find_make(A, 0, B, 0, dp)
+        x = self.find_make(A, 0, B, 0, dp)
+        return x
 
 
 if __name__ == "__main__":
@@ -42,9 +44,9 @@ if __name__ == "__main__":
     print("ans ", p)
     assert p == 1
     x = Solution()
-    p = x.numDistinct("cba", "abc")
+    p = x.numDistinct("aaaababbababbaabbaaababaaabbbaaabbb", "bbababa")
     print("ans ", p)
-    assert p == 0
+    assert p == 22113
     pr.disable()
     # after your program ends
     pr.print_stats(sort="calls")
